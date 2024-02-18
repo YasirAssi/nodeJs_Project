@@ -25,7 +25,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.post("/", (req, res) => {
-  console.log(req.body);
   res.json(req.body);
 });
 

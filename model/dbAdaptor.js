@@ -109,6 +109,7 @@ const getAllMyCards = (user_id) => {
 };
 
 const updateCard = async (id, cardData) => {
+  cardData = await normalizeCard(cardData);
   if (DB === "mongo") {
     return updateCardMongo(id, cardData);
   }

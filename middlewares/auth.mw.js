@@ -11,7 +11,6 @@ const authMiddleware = async (req, res, next) => {
     log(payload);
     next();
   } catch (err) {
-    console.log(err);
     log(err.message);
     errorHandler(res, 400, err.message);
   }

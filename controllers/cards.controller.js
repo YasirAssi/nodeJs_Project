@@ -100,9 +100,6 @@ const patchBizNumberController = async (req, res) => {
       throw new Error("Card not found");
     }
     //check bizNumber, also check if unique
-    if (!+cardFromDb.bizNumber) {
-      throw new Error("bizNumber is not a number");
-    }
     cardFromDb.bizNumber = req.body.bizNumber;
     let updatedCard = await updateCard(req.params.id, cardFromDb);
     return res.json(updatedCard);

@@ -4,6 +4,7 @@ import EditUserSchemaValidation from "./joi/users/EditUser.js";
 import bizSchemaSchemaValidation from "./joi/users/PatchBiz.js";
 import validateObjectId from "./joi/objectId.js";
 import cardValidationSchema from "./joi/cards/cardValidation.js";
+import cardBizNumSchemaValidation from "./joi/cards/PatchCardBiz.js";
 
 const VALIDATION = "joi";
 
@@ -63,6 +64,14 @@ const updateCardValidation = (userInput) => {
   }
 };
 
+const patchCardValidation = (cardInput) => {
+  if (VALIDATION === "joi") {
+    return cardBizNumSchemaValidation(cardInput);
+  } else {
+    throw new Error(`Validation ${VALIDATION} is not supported`);
+  }
+};
+
 export {
   registerValidation,
   logInnValidation,
@@ -71,4 +80,5 @@ export {
   objectIdValidation,
   creatCardValidation,
   updateCardValidation,
+  patchCardValidation,
 };

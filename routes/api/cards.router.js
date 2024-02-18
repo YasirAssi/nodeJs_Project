@@ -16,6 +16,7 @@ import bodyValidationMiddleware from "../../middlewares/bodyValidation.js";
 import {
   creatCardValidation,
   updateCardValidation,
+  patchCardValidation,
 } from "../../validation/validationAdapter.js";
 import adminOrBizMiddleware from "../../middlewares/adminOrBiz.mw.js";
 import isAdminMiddleware from "../../middlewares/isAdmin.mw.js";
@@ -56,6 +57,7 @@ router.patch(
   authMiddleware,
   objectIdParamsValidation,
   isAdminMiddleware,
+  bodyValidationMiddleware(patchCardValidation),
   patchBizNumberController
 );
 
