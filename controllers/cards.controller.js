@@ -10,6 +10,7 @@ import {
 import errorHandler from "../utils/handleError.js";
 import debug from "debug";
 const log = debug("app:cardsContoller");
+import checkCardBizNum from "../utils/checkCardBizNum.js";
 
 const creatCardController = async (req, res) => {
   try {
@@ -99,7 +100,10 @@ const patchBizNumberController = async (req, res) => {
     if (!cardFromDb) {
       throw new Error("Card not found");
     }
-    //check bizNumber, also check if unique
+    const bizNumber = await checkCardBizNum(req.body.bizNumber);
+    if (bizNumber && bizNumber._id != req.params.id) {
+      throw new Error("bizNumber already exist!");
+    }
     cardFromDb.bizNumber = req.body.bizNumber;
     let updatedCard = await updateCard(req.params.id, cardFromDb);
     return res.json(updatedCard);
