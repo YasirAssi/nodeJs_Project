@@ -10,6 +10,7 @@ import {
 import errorHandler from "../utils/handleError.js";
 import { generateHash, cmpHash } from "../utils/bcrypt.js";
 import { generateToken } from "../token/jwt.js";
+import nodemailer from "nodemailer";
 
 const logInController = async (req, res) => {
   try {
@@ -22,6 +23,34 @@ const logInController = async (req, res) => {
       _id: userFromDB._id,
       isAdmin: userFromDB.isAdmin,
       isBusiness: userFromDB.isBusiness,
+    });
+    const transPorter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "yasser3452@gmail.com",
+        pass: process.env.Pass_nodeMailer,
+      },
+    });
+    const mailOptions = {
+      from: "yasser3452@gmail.com",
+      to: userFromDB.email,
+      subject: "nodemailer notification",
+      text: "Welcome back to our website ,your login is successful",
+      html: `
+    <div style="font-family: Arial, sans-serif; color: #333; background-color: #f5f5f5; padding: 20px;">
+      <h2 style="color: #007bff;">Welcom ${
+        userFromDB.name.first + " " + userFromDB.name.last
+      }</h2>
+      <p style="font-size: 16px;"> "Welcome aboard! We're thrilled to have you as a registered member, and we can't wait to provide you with exceptional service."!</p>
+    </div>
+  `,
+    };
+    transPorter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent:" + info.response);
+      }
     });
     res.json(token);
   } catch (err) {
