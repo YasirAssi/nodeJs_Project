@@ -67,6 +67,34 @@ const registerController = async (req, res) => {
     req.body.password = passwordHash;
     let newUser = await createUser(req.body);
     newUser.password = undefined;
+    const transPorter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "yasser3452@gmail.com",
+        pass: process.env.Pass_nodeMailer,
+      },
+    });
+    const mailOptions = {
+      from: "yasser3452@gmail.com",
+      to: userFromDB.email,
+      subject: "nodemailer notification",
+      text: "Your registeration is successful",
+      html: `
+    <div style="font-family: Arial, sans-serif; color: #333; background-color: #f5f5f5; padding: 20px;">
+      <h2 style="color: #007bff;">Your registration is successful ${
+        userFromDB.name.first + " " + userFromDB.name.last
+      }</h2>
+      <p style="font-size: 16px;"> Thank you for registering with us. We look forward to serving you!</p>
+    </div>
+  `,
+    };
+    transPorter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent:" + info.response);
+      }
+    });
     res.json(newUser);
   } catch (err) {
     console.log(err);
