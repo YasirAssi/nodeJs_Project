@@ -28,7 +28,7 @@ const getAllCardsController = async (req, res) => {
     let cards = await getAllCards();
     res.json(cards);
   } catch (err) {
-    console.log(err);
+    log(err);
   }
 };
 
@@ -37,7 +37,7 @@ const getCardByIdController = async (req, res) => {
     let cards = await getCardById(req.params.id);
     res.json(cards);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
@@ -46,14 +46,16 @@ const getAllMyCardsController = async (req, res) => {
   try {
     let myCards = await getAllMyCards(req.userData._id);
     return res.json(myCards);
-  } catch (error) {}
+  } catch (err) {
+    log(err);
+    errorHandler(res, 400, err.message);
+  }
 };
 
 const updateCardController = async (req, res) => {
   try {
     const cardFromDb = await getCardById(req.params.id);
 
-    console.log("cardFromDb", cardFromDb);
     let { user_id } = cardFromDb;
     user_id = user_id + "";
     if (!cardFromDb) {
@@ -65,10 +67,9 @@ const updateCardController = async (req, res) => {
       );
     }
     const updatedCard = await updateCard(req.params.id, req.body);
-    console.log("updated Card", updateCard);
     return res.json(updatedCard);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
@@ -86,10 +87,9 @@ const patchLikeController = async (req, res) => {
       likes.push(req.userData._id);
     }
     const updatedCardFromDb = await updateLikeCard(req.params.id, likes);
-    console.log("updatedCardFromDb", updatedCardFromDb);
     return res.json(updatedCardFromDb);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
@@ -108,7 +108,7 @@ const patchBizNumberController = async (req, res) => {
     let updatedCard = await updateCard(req.params.id, cardFromDb);
     return res.json(updatedCard);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
@@ -129,7 +129,7 @@ const deleteCardController = async (req, res) => {
     const cardAfterDeleteFromDb = await deleteCard(req.params.id);
     return res.json(cardAfterDeleteFromDb);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
