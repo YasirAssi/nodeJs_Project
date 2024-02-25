@@ -10,7 +10,6 @@ import {
 import errorHandler from "../utils/handleError.js";
 import { generateHash, cmpHash } from "../utils/bcrypt.js";
 import { generateToken } from "../token/jwt.js";
-import nodemailer from "nodemailer";
 import debug from "debug";
 const log = debug("app:user.controller");
 
