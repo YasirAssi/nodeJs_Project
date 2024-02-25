@@ -11,11 +11,12 @@ import errorHandler from "../utils/handleError.js";
 import { generateHash, cmpHash } from "../utils/bcrypt.js";
 import { generateToken } from "../token/jwt.js";
 import nodemailer from "nodemailer";
+import debug from "debug";
+const log = debug("app:user.controller");
 
 const logInController = async (req, res) => {
   try {
     let userFromDB = await getUserByEmail(req.body.email);
-    // console.log(userFromDB);
     if (!userFromDB) throw new Error("invalid email or password");
     let passwordMatch = await cmpHash(req.body.password, userFromDB.password);
     if (!passwordMatch) throw new Error("invalid email or password");
@@ -76,13 +77,13 @@ const registerController = async (req, res) => {
     });
     const mailOptions = {
       from: "yasser3452@gmail.com",
-      to: userFromDB.email,
+      to: newUser.email,
       subject: "nodemailer notification",
       text: "Your registeration is successful",
       html: `
     <div style="font-family: Arial, sans-serif; color: #333; background-color: #f5f5f5; padding: 20px;">
       <h2 style="color: #007bff;">Your registration is successful ${
-        userFromDB.name.first + " " + userFromDB.name.last
+        newUser.name.first + " " + newUser.name.last
       }</h2>
       <p style="font-size: 16px;"> Thank you for registering with us. We look forward to serving you!</p>
     </div>
