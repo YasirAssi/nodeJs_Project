@@ -25,34 +25,7 @@ const logInController = async (req, res) => {
       isAdmin: userFromDB.isAdmin,
       isBusiness: userFromDB.isBusiness,
     });
-    const transPorter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "yasser3452@gmail.com",
-        pass: process.env.Pass_nodeMailer,
-      },
-    });
-    const mailOptions = {
-      from: "yasser3452@gmail.com",
-      to: userFromDB.email,
-      subject: "nodemailer notification",
-      text: "Welcome back to our website ,your login is successful",
-      html: `
-    <div style="font-family: Arial, sans-serif; color: #333; background-color: #f5f5f5; padding: 20px;">
-      <h2 style="color: #007bff;">Welcom ${
-        userFromDB.name.first + " " + userFromDB.name.last
-      }</h2>
-      <p style="font-size: 16px;"> "Welcome aboard! We're thrilled to have you as a registered member, and we can't wait to provide you with exceptional service."!</p>
-    </div>
-  `,
-    };
-    transPorter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        log(error);
-      } else {
-        log("Email sent:" + info.response);
-      }
-    });
+
     res.json(token);
   } catch (err) {
     log(err);
@@ -68,34 +41,6 @@ const registerController = async (req, res) => {
     req.body.password = passwordHash;
     let newUser = await createUser(req.body);
     newUser.password = undefined;
-    const transPorter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "yasser3452@gmail.com",
-        pass: process.env.Pass_nodeMailer,
-      },
-    });
-    const mailOptions = {
-      from: "yasser3452@gmail.com",
-      to: newUser.email,
-      subject: "nodemailer notification",
-      text: "Your registeration is successful",
-      html: `
-    <div style="font-family: Arial, sans-serif; color: #333; background-color: #f5f5f5; padding: 20px;">
-      <h2 style="color: #007bff;">Your registration is successful ${
-        newUser.name.first + " " + newUser.name.last
-      }</h2>
-      <p style="font-size: 16px;"> Thank you for registering with us. We look forward to serving you!</p>
-    </div>
-  `,
-    };
-    transPorter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        log(error);
-      } else {
-        log("Email sent:" + info.response);
-      }
-    });
     res.json(newUser);
   } catch (err) {
     log(err);
