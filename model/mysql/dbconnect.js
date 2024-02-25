@@ -1,5 +1,7 @@
 import mysql from "mysql2/promise";
 import chalk from "chalk";
+import debug from "debug";
+const log = debug("app:dbConnect");
 
 const connectToMySQL = async () => {
   try {
@@ -10,10 +12,10 @@ const connectToMySQL = async () => {
       database: "mydb",
     });
     const connection = await conf.getConnection();
-    console.log(chalk.magentaBright.bold("Connected to MySQL"));
+    log(chalk.magentaBright.bold("Connected to MySQL"));
     return connection;
   } catch (err) {
-    console.log(chalk.redBright.bold("Error connecting to MySQL: ", err));
+    log(chalk.redBright.bold("Error connecting to MySQL: ", err));
     process.exit(1); //drop the server
   }
 };

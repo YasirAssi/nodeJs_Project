@@ -1,6 +1,8 @@
 import { createUser } from "../model/dbAdaptor.js";
 import { createCard } from "../model/dbAdaptor.js";
 import generateUniqueNumber from "../utils/generateUniqueNumber.js";
+import debug from "debug";
+const log = debug("app:intialData");
 
 const initialUsers = async () => {
   let users = [
@@ -136,11 +138,10 @@ const initialCards = async (bizId) => {
   ];
   try {
     for (let card of cards) {
-      console.log("card", card);
       await createCard(card);
     }
   } catch (err) {
-    console.log(err);
+    log(err);
   }
 };
 

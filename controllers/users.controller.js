@@ -48,14 +48,14 @@ const logInController = async (req, res) => {
     };
     transPorter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
+        log(error);
       } else {
-        console.log("Email sent:" + info.response);
+        log("Email sent:" + info.response);
       }
     });
     res.json(token);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
@@ -91,14 +91,14 @@ const registerController = async (req, res) => {
     };
     transPorter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
+        log(error);
       } else {
-        console.log("Email sent:" + info.response);
+        log("Email sent:" + info.response);
       }
     });
     res.json(newUser);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
@@ -108,7 +108,7 @@ const getAllUsersController = async (req, res) => {
     let users = await getAllUsers();
     res.json(users);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
@@ -118,7 +118,7 @@ const getUserByIdController = async (req, res) => {
     let users = await getUserById(req.params.id);
     res.json(users);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
@@ -129,7 +129,7 @@ const updateUserController = async (req, res) => {
     userFromDB.password = undefined;
     res.json(userFromDB);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
@@ -140,7 +140,7 @@ const deleteUserController = async (req, res) => {
     userFromDB.password = undefined;
     res.json(userFromDB);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
@@ -151,7 +151,7 @@ const patchBizController = async (req, res) => {
     userFromDB.password = undefined;
     res.json(userFromDB);
   } catch (err) {
-    console.log(err);
+    log(err);
     errorHandler(res, 400, err.message);
   }
 };
