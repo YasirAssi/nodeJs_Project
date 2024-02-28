@@ -34,7 +34,7 @@ you can run:
 
 And if there are no login errors you should see the message painted in purple:
 
-`connected to MongoDb Locally!`
+`connected to MongoDb!`
 
 ## Available Routes
 
