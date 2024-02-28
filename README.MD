@@ -36,6 +36,8 @@ And if there are no login errors you should see the message painted in purple:
 
 `connected to MongoDb!`
 
+-In order to see the logs, `DEBUG=app:*` must be added to the development environment.
+
 ## Available Routes
 
 Here you can find API addresses that the server will respond to as well as what should be sent to them in the body of the HTTP request and what permissions are required to receive a response from a specific API
